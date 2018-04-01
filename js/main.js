@@ -31,34 +31,30 @@ const colorPicker = (num) => {
 }
 
 const addStars = () => {
-  $.getJSON('../json/solarsystems.json', function(stars) {
-    for (let starID in stars) {
-      const pos = stars[starID].position;
-      const color = colorPicker(Number(stars[starID].security));
-      const material = new THREE.MeshBasicMaterial({color: color});
-      const sphere = new THREE.Mesh(sphereGeometry, material);
-      scene.add(sphere);
-      sphere.position.set(pos[0], pos[1], pos[2]);
-    }
-  });
+  for (let starID in solarsystems) {
+    const pos = solarsystems[starID].position;
+    const color = colorPicker(Number(solarsystems[starID].security));
+    const material = new THREE.MeshBasicMaterial({color: color});
+    const sphere = new THREE.Mesh(sphereGeometry, material);
+    scene.add(sphere);
+    sphere.position.set(pos[0], pos[1], pos[2]);
+  }
 }
 
 const addGates = () => {
-  $.getJSON('../json/gates.json', function(gates) {
-    for (let i = 0; i < gates.length; i++) {
-      const pos1 = gates[i][0];
-      const pos2 = gates[i][1];
+  for (let i = 0; i < gates.length; i++) {
+    const pos1 = gates[i][0];
+    const pos2 = gates[i][1];
 
-      const geometry = new THREE.Geometry();
-      geometry.vertices.push(
-      	new THREE.Vector3(pos1[0], pos1[1], pos1[2]),
-      	new THREE.Vector3(pos2[0], pos2[1], pos2[2])
-      );
+    const geometry = new THREE.Geometry();
+    geometry.vertices.push(
+    	new THREE.Vector3(pos1[0], pos1[1], pos1[2]),
+    	new THREE.Vector3(pos2[0], pos2[1], pos2[2])
+    );
 
-      const line = new THREE.Line(geometry, lineMat);
-      scene.add( line );
-    }
-  });
+    const line = new THREE.Line(geometry, lineMat);
+    scene.add( line );
+  }
 }
 
 const animate = () => {
